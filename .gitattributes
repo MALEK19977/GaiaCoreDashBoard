@@ -1,2 +1,29 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Power BI Temporary Files
+*.pbix.tmp
+*.pbip.tmp
+*.pbix.lock
+*.pbip.lock
+*.rdl.data
+*.rux
+
+# IDE/Editor Files
+.vs/
+.idea/
+*.suo
+*.user
+
+# Build/Output Folders
+bin/
+obj/
+Debug/
+Release/
+
+# Secrets (Never commit these!)
+*.pwbi
+*.pbit
+*.pbids
+*.csv  # If containing sensitive data
+*.xlsx
+
+# Git LFS tracking files (if used)
+.gitattributes

@@ -47,6 +47,7 @@
 
 2. **First-Time Setup**:
    ```bash
-   git clone https://github.com/MeMalek/DashBoard_BI_GaiaCore.git
+   git clone https://github.com/MALEK19977/GaiaCoreDashBoard/tree/EyaPi
+
    git lfs install
    git lfs pull

@@ -26,4 +26,4 @@ Release/
 *.xlsx
 
 # Git LFS tracking files (if used)
-.gitattributes
+*.pbix filter=lfs diff=lfs merge=lfs -text

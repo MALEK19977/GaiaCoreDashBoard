@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .node { stroke: #333; stroke-width: 1.5px; }
+    .fact-node { fill: #FFD700; stroke: #B8860B; }
+    .dim-node { fill: #87CEEB; stroke: #4682B4; }
+    .link { stroke: #000; stroke-opacity: 0.8; }
+    .table-title { font-weight: bold; fill: #000; font-size: 12px; }
+    .attribute-text { font-size: 10px; fill: #333; }
+  </style>
+</head>
+<body>
+  <div id="schema-container"></div>
+  <script>
+    const width = 1200;
+    const height = 800;
+
+    const tables = {
+      nodes: [
+        { id: "Fact_Performance_Environmentale", type: "fact", fields: ["PK_Fact", "FK_Material", "FK_Equipment", "FK_Supplier", "FK_Location", "FK_Date", "FK_Climate", "FK_Product", "Total_Stock_Value", "Carbon_Footprint_per_Unit_kgCO2e", "Transport_Distance_km", "Water_Consumption_per_Unit_liters", "Energy_Consumption_kWh", "CO2_Emissions_kg","Humidity", "Wind_Speed", "CO2_Ambient_Level"] },
+        { id: "Fact_Maintenance_Issues", type: "fact", fields: ["PK_Issue", "FK_Equipment", "FK_Material", "FK_MARD", "FK_QMEL", "FK_Notif", "FK_Date", "FK_Product", "Maintenance_Cycle", "Maintenance_Frequency", "Estimated_Lifetime_Years" ,"qmtxt" , "ltxa1"] },
+        { id: "Dim_Date", type: "dim", fields: ["PK_Date", "Date", "Month", "Year", "Week", "Quarter", "Annual"] },
+        { id: "Dim_Products", type: "dim", fields: ["PK_Product", "Product_Name", "Brand", "Category", "Energy_kcal", "Fat_g", "Protein_g", "Sugar_g", "Empreinte_Carbone"] },
+        { id: "Dim_Materials", type: "dim", fields: ["PK_Material", "Material_Name", "Type", "Stock_Unit", "Arrival_Date", "Recycled_Packaging"] },
+        { id: "Dim_Suppliers", type: "dim", fields: ["PK_Supplier", "Supplier_Name", "Location", "Contact_Email", "Transport_Type", "Environmental_Certifications", "Sustainability_Program"] },
+        { id: "Dim_Equipments", type: "dim", fields: ["PK_Equipment", "Equipment_Name", "Category", "Manufacturer"] },
+        { id: "Dim_Location", type: "dim", fields: ["PK_Location", "Location_Name", "Country", "Region"] },
+        { id: "Dim_Notification", type: "dim", fields: ["PK_Notif", "Category", "Description", "Priority", "Timestamp"] },
+        { id: "Dim_Climate", type: "dim", fields: ["PK_Climate", "Date"] },
+        { id: "Dim_MARD", type: "dim", fields: ["PK_MARD", "WERKS", "LGORT", "INSME", "RETME", "BLOCK"] },
+        { id: "Dim_QMEL", type: "dim", fields: ["PK_QMEL", "AUFNR", "QMART", "ERDAT", "PRIOK", "QMTXT", "STRMN", "LTXA1", "User"] }
+      ],
+      links: [
+        { source: "Fact_Performance_Environmentale", target: "Dim_Date" },
+        { source: "Fact_Performance_Environmentale", target: "Dim_Products" },
+        { source: "Fact_Performance_Environmentale", target: "Dim_Materials" },
+        { source: "Fact_Performance_Environmentale", target: "Dim_Suppliers" },
+        { source: "Fact_Performance_Environmentale", target: "Dim_Equipments" },
+        { source: "Fact_Performance_Environmentale", target: "Dim_Location" },
+        { source: "Fact_Performance_Environmentale", target: "Dim_Climate" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_Equipments" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_Materials" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_Notification" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_Date" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_Products" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_MARD" },
+        { source: "Fact_Maintenance_Issues", target: "Dim_QMEL" }
+      ]
+    };
+
+    // Define card dimensions based on number of fields
+    tables.nodes.forEach(d => {
+      d.width = 220;
+      d.height = 40 + d.fields.length * 14;  // 40px for title/margin plus 14px per field line
+    });
+
+    const svg = d3.select("#schema-container")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    const simulation = d3.forceSimulation(tables.nodes)
+      .force("link", d3.forceLink(tables.links).id(d => d.id).distance(200).strength(0.8))
+      .force("charge", d3.forceManyBody().strength(-500))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collide", d3.forceCollide(d => Math.max(d.width, d.height) / 2 + 20));
+
+    const link = svg.append("g")
+      .selectAll("line")
+      .data(tables.links)
+      .enter().append("line")
+      .attr("class", "link");
+
+    const node = svg.append("g")
+      .selectAll("g")
+      .data(tables.nodes)
+      .enter().append("g")
+      .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+    // Append a rectangle for each node (card)
+    node.append("rect")
+      .attr("x", d => -d.width / 2)
+      .attr("y", d => -d.height / 2)
+      .attr("width", d => d.width)
+      .attr("height", d => d.height)
+      .attr("rx", 10)  // rounded corners
+      .attr("ry", 10)
+      .attr("class", d => d.type === "fact" ? "fact-node node" : "dim-node node");
+
+    // Append table title text
+    node.append("text")
+      .attr("class", "table-title")
+      .attr("text-anchor", "middle")
+      .attr("x", 0)
+      .attr("y", d => -d.height / 2 + 15)
+      .text(d => d.id);
+
+    // Append attribute texts
+    node.selectAll(".field-text")
+      .data(d => d.fields)
+      .enter().append("text")
+      .attr("class", "attribute-text")
+      .attr("text-anchor", "middle")
+      .attr("x", 0)
+      .attr("y", function(field, i) {
+        const parentData = d3.select(this.parentNode).datum();
+        return -parentData.height / 2 + 30 + i * 14;
+      })
+      .text(d => d);
+
+    simulation.on("tick", () => {
+      link.attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+      node.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    // Drag event handlers
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+Notification_KPI = 
+VAR NotificationPriorite = 
+    TRIM(LOOKUPVALUE(
+        'dim_notifications'[Priorite], 
+        'dim_notifications'[notification_PK], 
+        FIRSTNONBLANK('fact_maintenance_issues'[notification_FK], 1)
+    ))
+VAR NotificationDescription = 
+    LOOKUPVALUE(
+        'dim_notifications'[Description], 
+        'dim_notifications'[notification_PK], 
+        FIRSTNONBLANK('fact_maintenance_issues'[notification_FK], 1)
+    )
+RETURN 
+    SWITCH(
+        TRUE(),
+        NotificationPriorite = "Critique", "🔴 High Priority - " & NotificationDescription,
+        NotificationPriorite = "Moyenne", "🟠 Medium Priority - " & NotificationDescription,
+        NotificationPriorite = "Faible", "🟢 Low Priority - " & NotificationDescription,
+        ISBLANK(NotificationPriorite), "⚪ No Priority Assigned", 
+        "⚪ Invalid Priority"
+    )

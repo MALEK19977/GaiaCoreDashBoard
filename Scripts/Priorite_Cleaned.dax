@@ -1,0 +1,12 @@
+Priorite_Cleaned = 
+VAR CurrentRowPriorite = CALCULATE(MAX(dim_notifications[Priorite]))  Force single value
+VAR FirstChar = UPPER(LEFT(CurrentRowPriorite, 1))
+RETURN
+SWITCH(
+    TRUE(),
+    FirstChar = C, Critique,
+    FirstChar = M, Moyenne,
+    FirstChar = F, Faible,
+    ISBLANK(CurrentRowPriorite), BLANK(),
+    Invalid
+)

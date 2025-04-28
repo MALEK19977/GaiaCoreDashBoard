@@ -1,0 +1,42 @@
+Material_KPIs = 
+VAR CurrentMaterial = SELECTEDVALUE(dim_materials[Material_Name])
+VAR CO2_Limit = 450 
+VAR Water_Limit = 1500
+VAR HasData = NOT(ISBLANK(CALCULATE(
+    COUNTROWS(fact_performance_environmental),
+    FILTER(
+        fact_performance_environmental,
+        RELATED(dim_materials[Material_Name]) = CurrentMaterial
+    )
+)))
+
+RETURN
+IF(
+    ISBLANK(CurrentMaterial),
+    "Please select a material from the list",
+    IF(
+        HasData,
+        CONCATENATEX(
+            FILTER(
+                fact_performance_environmental,
+                RELATED(dim_materials[Material_Name]) = CurrentMaterial
+            ),
+            "📌 Material: " & CurrentMaterial & UNICHAR(10) & UNICHAR(10) &
+            "🌍 Carbon Footprint: " & [Carbon_Footprint_per_Unit_kgCO2e] & " kg CO₂e" & 
+                IF([Carbon_Footprint_per_Unit_kgCO2e] > CO2_Limit, 
+                   " ❌ (Above limit)", 
+                   " ✅ (Within limits)") & UNICHAR(10) &
+            "💧 Water Consumption: " & [Water_Consumption_per_Unit_liters] & " liters" &
+                IF([Water_Consumption_per_Unit_liters] > Water_Limit, 
+                   " ❌ (Above limit)", 
+                   " ✅ (Within limits)") & UNICHAR(10) &
+            "🚚 Transport Distance: " & [Transport_Distance_km] & " km" & UNICHAR(10) &
+            "----------------------------------------",
+            UNICHAR(10) & UNICHAR(10)  // Double line break between entries
+        ),
+        "Material '" & CurrentMaterial & "' is in good standing ✅" & UNICHAR(10) & UNICHAR(10) &
+        "All environmental metrics are within acceptable limits:" & UNICHAR(10) &
+        "• Carbon Footprint < " & CO2_Limit & " kg CO₂e" & UNICHAR(10) &
+        "• Water Consumption < " & Water_Limit & " liters"
+    )
+)

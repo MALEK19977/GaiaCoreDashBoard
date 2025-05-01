@@ -1,29 +1,9 @@
-# Power BI Temporary Files
-*.pbix.tmp
-*.pbip.tmp
-*.pbix.lock
-*.pbip.lock
-*.rdl.data
-*.rux
+# Normalize line endings for text files
+* text=auto
 
-# IDE/Editor Files
-.vs/
-.idea/
-*.suo
-*.user
-
-# Build/Output Folders
-bin/
-obj/
-Debug/
-Release/
-
-# Secrets (Never commit these!)
-*.pwbi
-*.pbit
-*.pbids
-*.csv  # If containing sensitive data
-*.xlsx
-
-# Git LFS tracking files (if used)
-.gitattributes
+# Explicitly handle binary files
+*.pbix binary
+*.pbip binary
+*.item binary
+*.png binary
+*.jpg binary

@@ -1,0 +1,12 @@
+Priority_Status = 
+VAR CurrentPriority = SELECTEDVALUE(dim_notifications[Prioritee], BLANK())
+VAR CleanPriority = TRIM(UPPER(CurrentPriority))
+RETURN
+SWITCH(
+    TRUE(),
+    ISBLANK(CurrentPriority), ⚪ No Priority,
+    CleanPriority = CRITIQUE, 🔴 High,
+    CleanPriority = MOYENNE, 🟠 Medium, 
+    CleanPriority = FAIBLE, 🟢 Low,
+    ⚪ Invalid
+)

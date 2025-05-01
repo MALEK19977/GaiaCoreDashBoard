@@ -1,0 +1,34 @@
+# Power BI Temporary Files
+*.pbix.tmp
+*.pbip.tmp
+*.pbix.lock
+*.pbip.lock
+*.rdl.data
+*.rux
+
+# Talend Temporary Files
+*.item
+*.bak
+*.properties
+/bin/
+/.settings/
+/target/
+/logs/
+
+# IDE/Editor Files
+.vs/
+.idea/
+*.suo
+*.user
+
+# Build/Output Folders
+obj/
+Debug/
+Release/
+
+# Secrets (Never commit these!)
+*.pwbi
+*.pbit
+*.pbids
+secrets.*
+config.properties

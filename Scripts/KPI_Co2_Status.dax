@@ -1,0 +1,7 @@
+KPI_CO2_Status = 
+SWITCH(
+    TRUE(),
+    [Avg_CO2_Level_Filled] < 450, "🟢 Optimal",
+    [Avg_CO2_Level_Filled] < 500, "🟠 Critique",
+    "🔴 Danger"
+)

@@ -1,2 +1,13 @@
-# Auto detect text files and perform LF normalization
+# Normalize line endings for text files
 * text=auto
+
+# Explicitly handle binary files
+*.pbix binary
+*.pbip binary
+*.item binary
+*.png binary
+*.jpg binary*.item binary
+*.java binary
+*.xml binary
+*.ps1 binary
+*.sh binary

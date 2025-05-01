@@ -1,0 +1,23 @@
+{
+    "name": "AgroFood Sustainability",
+    "dataColors": ["#4CAF50","#8BC34A","#FFC107","#F44336","#2196F3","#607D8B"],
+    "background":"#FFFFFF",
+    "foreground":"#263238",
+    "tableAccent":"#4CAF50",
+    "visualStyles": {
+      "*": {
+        "*": {
+          "title": [{"fontSize":12,"fontFamily":"Segoe UI","color":"#263238"}],
+          "background": [{"color":"#FFFFFF"}],
+          "outspacePane": [{"color":"#FAFAFA"}],
+          "filterCard": [{"backgroundColor":"#F5F5F5"}]
+        }
+      },
+      "card": {
+        "*": {
+          "calloutValue": [{"fontSize":24,"color":"#4CAF50"}],
+          "categoryLabel": [{"color":"#607D8B"}]
+        }
+      }
+    }
+  }

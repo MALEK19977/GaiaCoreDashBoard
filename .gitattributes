@@ -6,4 +6,8 @@
 *.pbip binary
 *.item binary
 *.png binary
-*.jpg binary
+*.jpg binary*.item binary
+*.java binary
+*.xml binary
+*.ps1 binary
+*.sh binary

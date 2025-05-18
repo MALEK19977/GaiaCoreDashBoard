@@ -1,0 +1,33 @@
+<div class="login-page-container">
+    <div class="login-container">
+      <h2>Login to GaiaCore</h2>
+      <p class="subtitle">Access your sustainability dashboards.</p>
+      <form (ngSubmit)="handleLogin()" #loginForm="ngForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" [(ngModel)]="email" required email #emailInput="ngModel">
+          <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="error-message alert alert-danger">
+            <div *ngIf="emailInput.errors?.['required']">
+              Email is required.
+            </div>
+            <div *ngIf="emailInput.errors?.['email']">
+              Please enter a valid email address.
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-login" [disabled]="!loginForm.form.valid || isLoading">
+          <span *ngIf="!isLoading">Login</span>
+          <span *ngIf="isLoading">Logging in...</span>
+        </button>
+      </form>
+      <div id="message-container" *ngIf="message" [ngClass]="{
+          '_alert': true, 
+          '_alert_error': messageType === 'error', 
+          '_alert_success': messageType === 'success'
+        }">
+        {{ message }}
+      </div>
+    </div>    </div>
+
+  
+  

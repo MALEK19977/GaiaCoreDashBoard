@@ -1,0 +1,61 @@
+/* Default Light Mode */
+.navbar {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+.dark-navbar {
+    background-color: #222 !important;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+/* Button Style */
+.btn-dark-mode {
+    margin-left: auto;
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-dark-mode:hover {
+    background-color: #777;
+}
+
+.gaiacore-logo-navbar {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.navbar-nav .nav-link.active {
+  color: #145A32 !important;
+  font-weight: bold;
+  border-bottom: 2.5px solid #145A32;
+  background: rgba(20,90,50,0.07);
+  border-radius: 4px 4px 0 0;
+}
+
+.navbar-nav .nav-link {
+  transition: color 0.2s, background 0.2s;
+  padding: 8px 18px;
+  font-size: 1.08rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #218838 !important;
+  background: rgba(20,90,50,0.10);
+}
+
+.navbar-nav {
+  gap: 0.5rem;
+}

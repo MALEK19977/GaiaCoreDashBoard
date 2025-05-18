@@ -1,0 +1,23 @@
+<div class="dashboard-container">
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="loading-indicator">
+        Loading dashboard...
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+
+    <!-- PowerBI Dashboard -->
+    <div *ngIf="!isLoading && !errorMessage && currentReportUrl" class="report-container">
+        <iframe 
+            [src]="currentReportUrl"
+            title="Gaiacore_Dashboard"
+            width="100%"
+            height="800"
+            frameborder="0"
+            allowFullScreen="true">
+        </iframe>
+    </div>
+</div>

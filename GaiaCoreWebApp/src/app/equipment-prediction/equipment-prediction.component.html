@@ -1,0 +1,50 @@
+<div class="container">
+    <h2>Prédiction de problèmes critiques Selon Les models Supervise</h2>
+    
+    <form (ngSubmit)="onSubmit()" #predictionForm="ngForm">
+        <div class="form-group">
+            <label for="manufacturer">Fabricant</label>
+            <input type="text" class="form-control" id="manufacturer"
+                   [(ngModel)]="formData.Manufacturer" name="manufacturer" required>
+        </div>
+
+        <div class="form-group">
+            <label for="energyType">Type d'énergie</label>
+            <input type="text" class="form-control" id="energyType"
+                   [(ngModel)]="formData.Energy_Type" name="energyType" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lifetime">Durée de vie estimée (années)</label>
+            <input type="number" class="form-control" id="lifetime"
+                   [(ngModel)]="formData.Estimated_Lifetime_Years" name="lifetime" required>
+        </div>
+
+        <div class="form-group">
+            <label for="co2">Émissions de CO2 (kg)</label>
+            <input type="number" class="form-control" id="co2"
+                   [(ngModel)]="formData.CO2_Emissions_kg" name="co2" required>
+        </div>
+
+        <div class="form-group">
+            <label for="energyConsumption">Consommation d'énergie (kWh)</label>
+            <input type="number" class="form-control" id="energyConsumption"
+                   [(ngModel)]="formData.Energy_Consumption_kWh" name="energyConsumption" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Prédire</button>
+        <div *ngIf="allResults" class="results-container mt-4 p-3 border rounded">
+  <h4>Résultats de la prédiction</h4>
+  
+  <div class="model-result" *ngFor="let model of ['knn', 'svm', 'dtree', 'ensemble']">
+    <h5>{{ model | uppercase }}</h5>
+    <div *ngIf="allResults[model]">
+      <p>Prédiction: 
+        <strong>{{ allResults[model].prediction ? 'Problème critique' : 'Pas de problème' }}</strong>
+      </p>
+      <p>Probabilité: {{ (allResults[model].probability * 100).toFixed(2) }}%</p>
+    </div>
+  </div>
+</div>
+    </form>
+</div>

@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="assets/images/logo.png" alt="GaiaCore Logo" class="gaiacore-logo-navbar" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-3 gap-2">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a class="nav-link" routerLink="/data" routerLinkActive="active">Data</a>
+        <a class="nav-link" routerLink="/ml-insights" routerLinkActive="active">ML Insights</a>
+        <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+        <a class="nav-link" routerLink="/documentation" routerLinkActive="active">Documentation</a>
+        
+      </div>
+      <button *ngIf="authService.currentUserValue" (click)="logout()" class="btn btn-link nav-link">Logout</button>
+      
+      <button class="btn btn-dark-mode ms-auto" (click)="toggleDarkMode()">
+        {{ darkMode ? '☀ Light Mode' : '🌙 Dark Mode' }}
+      </button>
+    </div>
+  </div>
+</nav>

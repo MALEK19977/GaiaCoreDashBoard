@@ -1,0 +1,19 @@
+{
+  "user_access": [
+    {
+      "email": "hamdimalek0097@gmail.com",
+      "page": "RES_Maintenance",
+      "url": "https://app.powerbi.com/reportEmbed?reportId=53b53292-fb76-4152-bb2c-fb91474a4183&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730&filterPaneEnabled=false&$filter=ReportPage eq 'RES_Maintenance'"
+    },
+    {
+      "email": "jeljliamin28@gmail.com",
+      "page": "RES_Environmental",
+      "url": "https://app.powerbi.com/reportEmbed?reportId=53b53292-fb76-4152-bb2c-fb91474a4183&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730&filterPaneEnabled=false&$filter=ReportPage eq 'RES_Environmental'"
+    },
+    {
+      "email": "hamdimalek52@gmail.com",
+      "page": "RES_Energy Efficiency",
+      "url": "https://app.powerbi.com/reportEmbed?reportId=53b53292-fb76-4152-bb2c-fb91474a4183&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730&filterPaneEnabled=false&$filter=ReportPage eq 'RES_Energy Efficiency'"
+    }
+  ]
+}
